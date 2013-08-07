@@ -31,6 +31,10 @@ Retrieving a cloudinary URL based on your on your configuration and the given op
 
     var url = cloudinary.url(public_id, options);
 
+Retrieving a cloudinary URL using an identifier:
+
+    var url = cloudinary.url_from_identifier(identifier, options);
+
 Uploading an image (requires a backend with Cloudinary framework):
 
     var signed_request = retreive_signed_request_from_backend()
