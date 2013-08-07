@@ -338,3 +338,19 @@ describe "cloudinary", ->
     result = cloudinary.utils.url("test", shorten: true)
     expect(result).toEqual "http://res.cloudinary.com/test123/iu/test"
 
+  it "should parse identifier correctly", ->
+    result = cloudinary.utils.url_from_identifier("resource_type/type/v1234/public_id.fmt#signature")
+    expect(result).toEqual "http://res.cloudinary.com/test123/resource_type/type/v1234/public_id.fmt"
+    result = cloudinary.utils.url_from_identifier("type/v1234/public_id.fmt#signature")
+    expect(result).toEqual "http://res.cloudinary.com/test123/image/type/v1234/public_id.fmt"
+    result = cloudinary.utils.url_from_identifier("v1234/public_id.fmt#signature")
+    expect(result).toEqual "http://res.cloudinary.com/test123/image/upload/v1234/public_id.fmt"
+    result = cloudinary.utils.url_from_identifier("v1234/public_id.fmt")
+    expect(result).toEqual "http://res.cloudinary.com/test123/image/upload/v1234/public_id.fmt"
+    result = cloudinary.utils.url_from_identifier("v1234/public_id")
+    expect(result).toEqual "http://res.cloudinary.com/test123/image/upload/v1234/public_id"
+    result = cloudinary.utils.url_from_identifier("public_id")
+    expect(result).toEqual "http://res.cloudinary.com/test123/image/upload/public_id"
+    result = cloudinary.utils.url_from_identifier("resource_type/type/v1234/public_id.fmt#signature",
+      resource_type: "rt", type: "t", version: 4321, format: "f")
+    expect(result).toEqual "http://res.cloudinary.com/test123/rt/t/v4321/public_id.f"
